@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+header {
+	text-align: center;
+}
+#title {
+	color: orange;
+	font-size: 60px;
+	font-weight: bold;
+	text-shadow: 5px 5px 5px rgb(0, 0, 0);
+}
+hr {
+	margin: 30px auto;
+	width: 1000px;
+	height: 3px;
+	border: none;
+	background-color: orange;
+}
+section {
+	margin: 0 auto;
+	height: 720px;
+	width: 800px;
+}
+fieldset {
+	margin: 40px;
+	border: solid 2px gray;
+}
+legend {
+	font-size: 22px;
+	color: green;
+	font-weight: bold;
+}
+table {
+	margin: 0 auto;
+	height: 100%;
+	width: 70%;
+	text-align: right;
+	font-size: 15px;
+}
+.data {
+	width: 40%;
+	font-weight: 500;
+}
+input {
+	height: 40%;
+	width: 95%;
+}
+select {
+	height: 42%;
+	width: 97%;
+}
+#button {
+	text-align: right;
+}
+input[type=submit], input[type=reset] {
+	width: 150px;
+	margin: 10px;
+}
+.needs {
+	border-color: red;
+	border-style: solid;
+}
+</style>
+</head>
+<body>
+	<header>
+		<span id="title">Become a Member</span>
+		<hr>
+	</header>
+	<section>
+		<fieldset id="field1">
+			<legend>Registration Information</legend>
+			<table>
+				<tr>
+				<td class="data">E-Mail:</td><td><input type="text" class="needs"/></td>
+				</tr>
+				<tr>
+				<td class="data">Password:</td><td><input type="password" class="needs" placeholder="At least 6 letters or numbers"/></td>
+				</tr>
+				<tr>
+				<td class="data">Verify Password:</td><td><input type="text" class="needs"/></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset id="field2">
+			<legend>Member Information</legend>
+			<table>
+				<tr>
+				<td class="data">First Name:</td><td><input type="text" class="needs"/></td>
+				</tr>
+				<tr>
+				<td class="data">Last Name:</td><td><input type="text" class="needs"/></td>
+				</tr>
+				<tr>
+				<td class="data">Address:</td><td><input type="text" style="border-color:black"/></td>
+				</tr>
+				<tr>
+				<td class="data">City:</td><td><input type="text" class="needs"/></td>
+				</tr>
+				<tr>
+				<td class="data">State:</td><td><input type="text" class="needs" placeholder="2-character code"/></td>
+				</tr>
+				<tr>
+				<td class="data">ZIP Code:</td><td><input type="text" class="needs" placeholder="5 or 9 digits"/></td>
+				</tr>
+				<tr>
+				<td class="data">Phone Number:</td><td><input type="text" placeholder="999-999-9999" style="border-color:black"/></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset id="field3">
+			<legend>Membership Information</legend>
+			<table>
+				<tr>
+				<td class="data">Membership Type:</td><td><select><option selected>Junior</option></select></td>
+				</tr>
+				<tr>
+				<td class="data">Starting Date:</td><td><input type="date" class="needs"/></td>
+				</tr>
+				<tr>
+				<td class="data">Tickets for Guests:</td><td><input type="number" min="1" max="5" style="border-color:black"/></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset id="field4">
+			<legend>Submit Your Membership</legend>
+			<div id="button">
+				<input type="submit" value="Submit"/>
+				<input type="reset" value="Reset Fields"/>
+			</div>
+		</fieldset>
+	</section>
+	<footer>
+	<hr>
+	</footer>
+</body>
+</html>
