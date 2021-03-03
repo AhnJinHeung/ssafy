@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<span id="s">a</span>
+	</div>
+	<div>
+		<span id="s">b</span>
+	</div>
+	<div>
+		<span id="s">c</span>
+	</div>
+	<button id="btn">클릭</button>
+	<script>
+		function doAction() {
+			console.log(123);
+			console.log(document.querySelector('div:nth-child(1) > #s').innerHTML);
+			console.log(document.querySelector('div:nth-child(2) > #s').innerHTML);
+			console.log(document.querySelector('div:nth-child(3) > #s').innerHTML);
+		}
+		document.querySelector('#btn').onclick = doAction;
+	</script>
+</body>
+</html>
