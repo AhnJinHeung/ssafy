@@ -1,16 +1,13 @@
 # ssafy
 
 
-### Java
+* Java
 
 
-### Algorithm
+* Algorithm
 
 
-### Web/Framework
+* Web/Framework
 
 
-### Database
-
-
-### Project
+* Database
