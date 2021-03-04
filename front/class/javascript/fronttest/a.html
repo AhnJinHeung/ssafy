@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	let num = 0;
+	let time;
+	
+	function aa() {
+		if (!time) {
+			time = setInterval(toDo, 1000);
+		}
+	}
+	
+	function bb() {
+		clearInterval(time);
+	}
+	
+	function toDo() {
+		num += 3;
+		console.log('num', num);
+	}
+</script>
+</head>
+<body>
+<button onClick='aa()'>시작</button>
+<button onClick='bb()'>종료</button>
+</body>
+</html>

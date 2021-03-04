@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>시계</title>
+	<script type="text/javascript">
+	// 창이 제대로 읽혀 지면 함수 실행
+	window.onload = function() {
+		// 1초마다 주기적으로 호출
+		// 일차함수
+		// 동적타입 지원 => 정적타입 지원
+		// 객체지향언어
+		// 함수를 지원하는 언어
+		// 일반적인 단어 함수와 메소드를 구분
+		// function is value = 일차함수
+		setInterval(showTime, 1000);
+		// var 기본적인 메모리는 8바이트
+		// float, double, int, long, short
+		// 자바스크립트의 실수 표현이 자바 같다.
+		// 0 0000000 0000 1111 11111111 5바이트
+		// 정수 long은 2의 63승
+		// 자바스크립트의 정수는 2의 52승
+	};
+	
+	function showTime() {
+		var view = document.getElementById("view");
+		var date = new Date();
+		// HTML을 집어 넣음
+		// date.toLocaleTimeString(): 현재 시간을 문자열로 변경
+		view.innerHTML = date.toLocaleTimeString();
+	}
+	</script>
+</head>
+<body>
+	현재 시간 : <span id="view"></span>
+</body>
+</html>
+
+
+

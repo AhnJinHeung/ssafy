@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+	/* function aa(n1, n2) {
+		console.log(n1, n2);
+		console.log("aa1");
+	}
+	aa(2, 3);
+	console.log("--------");
+	function aa() {
+		console.log("aa2");
+	}
+	aa(2, 3); */
+	
+	function a(n1, n2) {
+		// 모든 함수에는 arguments 배열 비슷한 객체를 가지고 있다.
+		// console.log(n1, n2);
+		console.log(arguments.length);
+		console.log(arguments[0], arguments[1]);
+	}
+	a(1, 2);
+	a(1, 2, 3, 4, 5, 6);
+	
+	var sss = [1, 2, 4];
+	
+	function bbb(...param ){
+		// ...param : 배열
+		var kk = {"k" : "kkk",
+				  "s" : "sss",
+				  "d" : "ddd"};
+        for(var a in kk){
+            console.log(a, kk[a]);
+        }
+        console.log("--------------");
+        for(var a in param){
+            console.log(a, param[a]);
+        }
+    }
+    bbb(3,4,5,6,77,8);
+</script>
+</body>
+</html>
