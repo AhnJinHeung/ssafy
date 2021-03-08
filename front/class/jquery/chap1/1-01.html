@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>jquery 기본.</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    // jQuery : javascript query
+      $(document).ready(function () { // $(function() { , jQuery(function() { 같은 의미
+        $('button').click(function () {
+          $('#p1').css('background', 'orange');
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h2>jQuery 맛보기</h2>
+    <p>안녕하세요 싸피여러분!!!</p>
+    <p id="p1">안효인교수입니다. 참여 많이 해주세요 ^^</p>
+    <button>클릭</button>
+    
+    <script type="text/javascript">
+    	let arr = [4, 5, 6, 7, 8];
+    	
+    	// 자바스크립트의 배열 함수
+    	$(".class").each(function(index, el) {
+    		console.log(this);
+    	});
+    	
+    	arr.forEach(function(el, index) { // 콜백 함수, 첫 번째 인자 value, 두 번째 index
+    		console.log(index, el);
+    	});
+    	
+    	arr.forEach(function(el) { // 콜백 함수
+    		console.log(el);
+    	});
+    	
+    	console.log('---------');
+    	
+    	for (let a in arr) { // key 값이 나옴 (indexs)
+    		console.log(a);
+    	}
+    	for (let a of arr) { // value 값이 나옴 (elements = el)
+    		console.log(a);
+    </script>
+  </body>
+</html>
