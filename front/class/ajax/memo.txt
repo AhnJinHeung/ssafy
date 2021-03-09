@@ -1,0 +1,77 @@
+AJAX는 언어나 프레임워크가 아닌 구현하는 방식을 의미
+AJAX는 웹에서 화면을 갱신하지 않고 데이터를 서버로부터 가져와 처리하는 방법을 의미
+JavaScript의 XMLHttpRequest(XHR) 객체로 데이터를 전달하고 비동기 방식으로 결과를 조회
+화면 갱신이 없으므로 사용자 입장에서는 편리하지만, 동적으로 DOM을 구성해야 하므로 구현이 복잡
+
+
+XMLHttpRequest는 자바스크립트가 Ajax 방식으로 통신할 때 사용하는 객체
+XMLHttpRequest객체는 Ajax 통신 시 전송 방식, 경로, 서버로 전송할 data등 전송 정보를 담는 역할
+실제 서버와의 통신은 브라우저의 Ajax 엔진에서 수행
+
+
+contentType="text/html; 
+text로 보낼거지만 너는 html로 인식해
+
+contentType="text/plain;
+
+contentType="text/xml;
+
+contentType="application/json;
+
+
+*** GET 방식과 POST 방식
+  GET
+	URL에 변수(데이터)를 포함시켜 요청한다.
+	데이터를 Header에 포함하여 전송한다.
+	전송하는 길이에 제한이 있다.(데이터 손실 위험이 있음)
+	캐싱할 수 있다.
+	노출 상관 x, 적은 양
+  
+  POST
+	URL 변수(데이터)를 노출하지 않고 요청한다.
+	데이터를 Body에 포함시킨다.
+	URL에 데이터가 노출되지 않아서 기본 보안은 되어있다.
+	전송하는 길이에 제한이 없다.
+	캐싱 할 수 없다.
+	노출 상관 o, 많은 양
+
+
+*** 클라이언트-서버 데이터 전송 형식 : CSV, XML, JSON
+  1. CSV
+	각 항목을 쉼표(,)로 구분해 데이터를 표현하는 방법
+	다른 두 형식에 비해 굉장히 짧음
+	많은 양의 데이터 전송 시 유리
+	단, 각각의 데이터가 어떤 내용인지 파악하기 어려움
+  
+  2. XML
+  	xml은 tag로 data를 표현
+  	tag를 보면 각 data가 무엇을 의미하는지 파악 가능
+  	tag에 사용자 정의 속성을 넣을 수 있으므로 복잡한 data 전달 가능
+
+  3. JSON
+	CSV와 XML의 단점을 극복한 형식
+	Javascript에서 사용하는 객체의 형식으로 data를 표현
+	Ajax 사용 시 거의 표준으로 사용되는 data 표현 방식
+   
+   
+* URL
+	프로토콜: https:
+	서버주소: search.naver.com
+	포트: 80
+	uri: search.naver
+	QueryString: where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=ssafy
+
+클라이언트 중심, FE, 비동기 통신, 시맨틱  URL
+
+
+* 데이터 통신에서 사용되는 프로토콜
+	HTML => XML => JSON => CSV => 사용자 정의 프로토콜(키호스크, 스마트 팩토리, IOT에서 사용)
+	
+	클 수록 용량 낭비, 작을 수록 데이터의 의미를 알기 힘듬 => 최근에는 중간 지점인 JSON을 많이 사용
+	
+* 응답 코드
+	100: 작업 진행 중
+	200: 성공
+	300: 리다이렉션
+	400: 클라이언트 오류
+	500: 서버 오류
