@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	let data = {cc : 'korea1', dd : 'ssafy'};
+	$(function(){
+		$('#btn').on("click",function(){
+			$.ajax({
+				//url : 'c.jsp?cc=test&dd=protest',
+				url : 'c.jsp',
+				type: 'get',
+				//data : {cc : 'korea1', dd : 'ssafy'},
+				//data : data,
+				data :  {cc : $('#aa').val(), dd : $('#bb').val()},
+				//data : $('#frm').serialize(),
+				success : function(response, status){ //응답결과물, 응답결과상태값
+					console.log(response);
+					//console.log(status);
+				}
+			});
+		});
+	
+	});
+</script>
+
+</head>
+<body>
+메소드 테스트 <br>
+	<form id = "frm" method="post" action="c.jsp">
+		<input type="text" id="aa" name="cc"><br>
+		<input type="text" id="bb" name="dd"><br>
+		<input type="submit" value ="전송">
+	</form>
+	<br>
+	<a href = "c.jsp?cc=algo&dd=project%20front">gettest</a>
+	
+	<button id ="btn">테스트</button>
+</body>
+</html>

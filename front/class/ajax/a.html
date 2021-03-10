@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	let tot = 0;
+	let arr = [3, 5, 7, 9, 2];
+	
+	/* arr.forEach(function(item, index) {
+		console.log("item", item);
+		tot += item;
+	}); */
+	
+	setTimeout(function() { // 비동기 메소드
+		arr.forEach(function(item, index) { // 동기 메소드
+			console.log("item", item);
+			tot += item;
+		});
+		console.log("평균", tot/5); 
+	}, 1000);
+	
+//	console.log("평균", tot/5); // 비동기 (합계 구하는데 오류)
+</script>
+</head>
+<body>
+aaa
+</body>
+</html>

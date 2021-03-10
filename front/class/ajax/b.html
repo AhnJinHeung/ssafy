@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script type="text/javascript">
+ 	function aa() {
+ 		location.href = "b.jsp";
+ 	}
+ 	$(function () {
+        $('#btn1').click(function () {
+          // server에서 넘어온 data
+          $.ajax({
+        	  url: 'b.jsp',
+        	  type: 'GET',
+        	  success: function(data) {
+        		  console.log(data);
+        	  }
+          });
+        });
+ 	});
+</script>
+</head>
+<body>
+<a href="b.jsp">a.jsp</a>
+<button onClick="aa();">확인</button>
+<button id="btn1">확인1</button>
+</body>
+</html>
