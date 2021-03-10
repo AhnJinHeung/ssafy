@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SSAFY BOOK CAFE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="js/cafe.js"></script> -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        // localStorage에서 poll이름의 data 얻기.
+        var poll = localStorage.getItem('poll');
+
+        if (poll) {
+          // localStorage에서 얻은 문자열을 JSON객체로 변환.
+          var vote = JSON.parse(poll);
+          var sdate = vote.start_date; // 시작일.
+          var edate = vote.end_date; // 종료일.
+          var question = vote.question; // 질문.
+          var answers = vote.answers; // 답변항목.
+          // 투표 화면 구성.
+          var pollContent = `
+            <div class="vote_title">[ 당신의 선택 ]</div>
+            <div class="vote_question">${question}</div>
+              <div class="vote_answer">
+                <ul>`;
+          $.each(answers, function (i, item) {
+            pollContent += `
+                  <li>
+                    <label>
+                      <input type="radio" name="vote_answer" value="${item}" /> ${item}
+                    </label>
+                  </li >`;
+          });
+          pollContent += `
+                </ul>
+              </div>
+              <div class="vote_button">
+                <button id="btn-polling" class="button btn_primary">투표하기</button>
+                <button class="button">결과보기</button>
+              </div>
+              <div class="vote_date">투표기간 : ${dateFormat(sdate)} ~ ${dateFormat(edate)}</div>`;
+          // 투표 화면에 투표양식 추가.
+          $('#vote').html(pollContent);
+        } else {
+          // 진행중인 투표가 없을 경우 화면 추가.
+          $('#vote').html('<div class="vote_title">진행중인 투표가 없습니다.</div>');
+        }
+
+        // 로그인
+        $('#btn-login').click(function () {
+          // 사용자 정보를 입력받는다.
+          var userid = prompt('아이디입력', 'ssafy');
+          if (userid.length == 0) {
+            alert('아이디 입력!!!');
+            return;
+          }
+          var userpass = prompt('비밀번호입력', '1234');
+          if (userpass.length == 0) {
+            alert('비밀번호 입력!!!');
+            return;
+          }
+          if (userid == 'ssafy' && userpass == '1234') {
+            alert('로그인 성공!!!');
+            // id가 profile_img인 element의 src 속성의 값을 img/profile.png로 설정.
+            $('#profile_img').attr('src', 'img/profile.png');
+            $('#header_nav_confirm_off').css('display', 'none');
+            $('#header_nav_confirm_on').css('display', 'block');
+          } else {
+            alert('아이디 또는 비밀번호 확인!!!');
+          }
+        });
+
+        // 로그아웃
+        $('#btn-logout').click(function () {
+          // id가 profile_img인 element의 src 속성의 값을 img/noimg.png로 설정.
+          $('#profile_img').attr('src', 'img/noimg.png');
+          $('#header_nav_confirm_off').css('display', 'block');
+          $('#header_nav_confirm_on').css('display', 'none');
+        });
+
+        //전국매장
+        var storeView = true;
+        $('#store_display').click(function () {
+          if (storeView) {
+            $('.store_item_sub').slideDown(300);
+            $('#store_display').text('전국매장접기');
+            storeView = false;
+          } else {
+            $('.store_item_sub').slideUp(600);
+            $('#store_display').text('전국매장펼치기');
+            storeView = true;
+          }
+        });
+
+        //지역매장
+        $('.store_area').click(function () {
+          $(this)
+            .siblings('div.store_item_sub')
+            .slideDown(300)
+            .parent()
+            .siblings('li')
+            .children('div.store_item_sub')
+            .slideUp(500);
+        });
+
+        //프로그래밍메뉴 3초간격 이동
+        setInterval(function () {
+          $('.program_menu_li').first().appendTo('.program_menu_ul');
+        }, 3000);
+
+        // 투표 마들기
+        $('#btn-admin').click(function () {
+          // pollmake.html의 창아이디를 poll로 설정하고 가로 500, 세로 300인 창을 열기.
+          window.open('pollmake.html', 'poll', 'width=500,height=300,top=300,left=400');
+        });
+
+        $('#btn-polling').click(function () {
+          var sel_menu = $("input[name='vote_answer']:checked").val();
+          alert(sel_menu + '를 선택했습니다.');
+        });
+      });
+
+      // 투표 시작일과 종료일 날짜 형식. (yy.mm.dd)
+      function dateFormat(date) {
+        var yymmdd = date.split('-');
+        return yymmdd[0].substr(2, 2) + '.' + yymmdd[1] + '.' + yymmdd[2];
+      }
+    </script>
+  </head>
+  <body>
+    <!-- 상단 Header Start  -->
+    <header>
+      <nav>
+        <a class="header_nav_home" href="#">SSAFY BookCafe</a>
+        <a class="" href="#">공지사항</a>
+
+        <div class="header_nav_search"></div>
+
+        <div class="header_nav_menu">
+          <div id="header_nav_confirm_off">
+            <div class="header_nav_menuitem">
+              <a id="btn-login" class="nav_link" href="#">로그인</a>
+            </div>
+            <div class="header_nav_menuitem">
+              <a class="nav_link" href="#">회원가입</a>
+            </div>
+          </div>
+          <div id="header_nav_confirm_on" style="display: none">
+            <div class="header_nav_menuitem">
+              <a id="btn-logout" class="nav_link" href="#">로그아웃</a>
+            </div>
+            <div class="header_nav_menuitem">
+              <a class="nav_link" href="#">마이페이지</a>
+            </div>
+            <div class="header_nav_menuitem">
+              <a id="btn-admin" class="nav_link" href="#">관리자</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- 상단 Header End  -->
+
+    <!-- 중앙 Contents Start  -->
+    <div class="content">
+      <!-- 왼쪽 Content Start  -->
+      <div class="content_left">
+        <!-- 프로필 사진 Start  -->
+        <div class="profile">
+          <img id="profile_img" src="img/noimg.png" alt="" />
+        </div>
+        <!-- 프로필 사진 End  -->
+        <!-- 메뉴 Start  -->
+        <div class="store_title">
+          <div id="store_display">전국매장펼치기</div>
+          <ul class="store_item">
+            <li>
+              <div class="store_area">서울</div>
+              <div class="store_item_sub" style="display: none">
+                <ul>
+                  <li>역삼점</li>
+                  <li>선릉점</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="store_area">대전</div>
+              <div class="store_item_sub" style="display: none">
+                <ul>
+                  <li>학하점</li>
+                  <li>봉명점</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="store_area">구미</div>
+              <div class="store_item_sub" style="display: none">
+                <ul>
+                  <li>인동점</li>
+                  <li>공단점</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="store_area">광주</div>
+              <div class="store_item_sub" style="display: none">
+                <ul>
+                  <li>하남산단점</li>
+                  <li>광주역점</li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- 메뉴 End  -->
+        <!-- 설문조사 Start  -->
+        <div id="vote"></div>
+        <!-- 설문조사 End  -->
+      </div>
+      <!-- 왼쪽 Content End  -->
+
+      <!-- 중앙 Content Start  -->
+      <div class="content_body">
+        <!-- 프로그래밍 Section Start  -->
+        <section class="menu">
+          <h3 class="menu_title">[ 프로그래밍 언어 ]</h3>
+          <ul class="program_menu_ul">
+            <li class="program_menu_li">
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/p_book01.png" alt="" />
+                </div>
+                <div class="menu_item_info">Do it! 점프 투 파이썬<br />(18,800원)</div>
+              </div>
+            </li>
+            <li class="program_menu_li">
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/p_book02.png" alt="" />
+                </div>
+                <div class="menu_item_info">HTML5 API 프로그래밍<br />(23,000원)</div>
+              </div>
+            </li>
+            <li class="program_menu_li">
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/p_book03.png" alt="" />
+                </div>
+                <div class="menu_item_info">백견불여일타 Vue.js입문<br />(22,000원)</div>
+              </div>
+            </li>
+            <li class="program_menu_li">
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/p_book04.png" alt="" />
+                </div>
+                <div class="menu_item_info">Java 프로그래밍<br />(26,500원)</div>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <!-- 프로그래밍 Section End  -->
+
+        <!-- 에세이 Section Start  -->
+        <section class="menu">
+          <h3 class="menu_title">[ 에세이 ]</h3>
+          <ul>
+            <li>
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/e_book01.png" alt="" />
+                </div>
+                <div class="menu_item_info">2인조<br />(14,800원)</div>
+              </div>
+            </li>
+            <li>
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/e_book02.png" alt="" />
+                </div>
+                <div class="menu_item_info">안녕, 소중한 사람<br />(15,000원)</div>
+              </div>
+            </li>
+            <li>
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/e_book03.png" alt="" />
+                </div>
+                <div class="menu_item_info">꽃을 보든 너를 본다<br />(10,000원)</div>
+              </div>
+            </li>
+            <li>
+              <div class="menu_item">
+                <div class="menu_item_img">
+                  <img src="img/book/e_book04.png" alt="" />
+                </div>
+                <div class="menu_item_info">곰돌이 푸, 행복한 일은 매일 있어 (12,000원)</div>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <!-- 에세이 Section End  -->
+
+        <section class="article">
+          <!-- 인기글 Article Start  -->
+          <article class="article_popular">
+            <h3>[ 인기글 ]</h3>
+            <table class="table table_striped">
+              <thead>
+                <tr>
+                  <th class="title">제목</th>
+                  <th>작성자</th>
+                  <th>조회수</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>자바공부 쉽게하는법!!</td>
+                  <td>이쎄림</td>
+                  <td>1756</td>
+                </tr>
+                <tr>
+                  <td>알고리즘은 자바? 파이썬?</td>
+                  <td>홍정밍</td>
+                  <td>998</td>
+                </tr>
+                <tr>
+                  <td>스프링 정복하기~</td>
+                  <td>김나켠</td>
+                  <td>856</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+          <!-- 인기글 Article End  -->
+
+          <!-- 최신글 Article Start  -->
+          <article class="article_new">
+            <h3>[ 최신글 ]</h3>
+            <table class="table table_bordered table_hover">
+              <thead>
+                <tr>
+                  <th class="title">제목</th>
+                  <th>작성자</th>
+                  <th>조회수</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>web 관련 질문있어요.</td>
+                  <td>이주녕</td>
+                  <td>12</td>
+                </tr>
+                <tr>
+                  <td>vuejs는 이렇게 공부해보세요.</td>
+                  <td>조밍기</td>
+                  <td>98</td>
+                </tr>
+                <tr>
+                  <td>꽃길만 걸어요.</td>
+                  <td>류해면</td>
+                  <td>56</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+          <!-- 최신글 Article End  -->
+        </section>
+      </div>
+      <!-- 중앙 Content End  -->
+    </div>
+    <!-- 중앙 Contents End  -->
+
+    <!-- 하단 Footer Start  -->
+    <footer>
+      <ul>
+        <li><a class="" href="#">카페소개</a></li>
+        <li><a class="" href="#">개인정보처리방침</a></li>
+        <li><a class="" href="#">이용약관</a></li>
+        <li><a class="" href="#">오시는길</a></li>
+        <li>&copy; SSAFY Corp.</li>
+      </ul>
+    </footer>
+    <!-- 하단 Footer End  -->
+  </body>
+</html>
