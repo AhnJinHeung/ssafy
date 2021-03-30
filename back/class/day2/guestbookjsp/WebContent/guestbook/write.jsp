@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SSAFY - 글작성</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#writeBtn").click(function() {
+			if (!$("#name").val()) {
+				alert("이름 입력!!!!");
+				return;
+			} else if (!$("#subject").val()) {
+				alert("제목 입력!!!!");
+				return;
+			} else if (!$("#content").val()) {
+				alert("내용 입력!!!!");
+				return;
+			} else {
+				$("#writeform").attr("action", "/guestbookjsp/guestbook/articlewrite.jsp").submit();
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+
+<div class="container" align="center">
+	<div class="col-lg-6" align="center">
+		<h2>방명록 글쓰기</h2>
+		<form id="writeform" method="post" action="">
+			<div class="form-group" align="left">
+				<label for="name">작성자:</label>
+				<input type="text" class="form-control" id="name" name="name">
+			</div>
+			<div class="form-group" align="left">
+				<label for="subject">제목:</label>
+				<input type="text" class="form-control" id="subject" name="subject">
+			</div>
+			<div class="form-group" align="left">
+				<label for="content">내용:</label>
+				<textarea class="form-control" rows="15" id="content" name="content"></textarea>
+			</div>
+			<button type="button" id="writeBtn" class="btn btn-primary">글작성</button>
+			<button type="reset" class="btn btn-warning">초기화</button>
+		</form>
+	</div>
+</div>
+
+</body>
+</html>
