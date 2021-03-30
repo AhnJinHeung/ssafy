@@ -1,0 +1,37 @@
+request는 단발성
+session은 공용
+application은 모든 곳에서 사용 가능
+
+범위 차이
+pageContext < request < session < application
+내 프로젝트 바깥(application 바깥) 쪽에는 전달할 수 없음.
+
+공통 메소드 : getAttribute, setAttribute, removeAttribute
+
+WEB page 이동
+1. forward(request, response)
+: 프로젝트 내 경로로 이동 가능
+: 기존의 request와 response가 그대로 전달
+: 기존 URL 유지
+
+2. sendRedirect(location) -> 단순 페이지 이동
+: 동일 서버 포함 타 URL 가능
+: 기존의 request와 response는 소멸되고, 새로운 request와 response가 생성됨
+: URL 변경
+: full URL 필요
+
+request.getContextPath() : root를 가져옴
+
+모든 페이지의 이동은 서블릿으로.
+
+쿠키는 클라이언트에 저장
+세션은 서버에 저장
+
+세션은 쿠키를 반드시 활용
+
+ 쿠키와 로컬스토리지 차이점
+ 1. 저장용량의 크기와 삭제되는 시점이 다름
+ 2. 쿠키는 서버로 전송되고, 로컬은 서버에 전송되지 않음
+ 공통점
+ : 클라이언트의 저장 공간에 문자열로 저장됨
+ 
