@@ -1,0 +1,247 @@
+1. 서블릿 URL 매핑
+: http://www.ssafy.com/good.jsp?parameter1=value1&parameter2=value2
+URL ?(QueryString Begin) Parameter Name = Parameter Value &(QueryString Separator) 
+
+
+
+2. 서블릿 라이프 사이클
+: Servlet class는 javaSE에서의 class와는 다르게 main method가 없다.
+즉 객체의 생성부터 사용(method call)의 주체가 사용자가 아닌 Servlet Container에게 있다.
+: Client가 요청(request)을 하게 되면 Servlet Container는 Servlet 객체를 생성(한번만)하고, 초기화(한번만)하며
+요청에 대한 처리(요청시 마다 반복)를 하게 된다. 또한 Servlet 객체가 필요 없게 되면 제거하는 일까지 Container가 담당하게 된다.
+
+request -> Constructor -> init -> service, doGet, doPost -> request(반복) -> service, doGet, doPost(반복) -> destroy 
+
+
+
+3. 글 작성한 사람의 IP 확인
+request.getRemoteAddr()
+
+
+
+4. 스크립트 요소
+1) 선언 <%! %> : 멤버 변수 선언이나 메소드를 선언하는 영역.
+2) 스크립트릿 <% %> : Client 요청 시 매번 호출되는 영역으로, Servlet으로 변환 시 service() method에 해당되는 영역.
+3) 표현식 <%= %> : 데이터를 브라우저에 출력할 때 사용.
+4) 주석 <%-- %>
+5) 지시자 <%@ %>
+# HTML 주석 : <!-- -->
+
+
+
+5. 지시자
+1) page Directive : 컨테이너에게 현재 JSP 페이지를 어떻게 처리할 것인가에 대한 정보를 제공 - contentType, import
+2) include Directive : 특정 JSP file을 페이지에 포함
+3) taglib Directive : JSTL 또는 사용자에 의해서 만든 커스텀 태크를 이용할 때 사용되며 JSP 페이지 내에 불필요한 자바 코드들 줄일 수 있다.
+
+
+
+6. 세션 & 쿠키 : 클라이언트 단위로 상태 정보를 유지해야 하는 경우 사용. HTTP 프로토콜의 특징(약점)을 보완하기 위해 사용.
+1) 쿠키
+: 서버에서 사용자의 컴퓨터에 저장하는 정보파일
+: 사용자가 별도의 요청을 하지 않아도 브라우저는 request시 Request Header를 넣어 자동으로 서버에 전송
+: key와 value로 구성되고 String 형태로 이루어져 있음
+: 브라우저마다 저장되는 쿠키는 다름
+
+# 쿠키 사용
+목적 : 세션관리, 개인화, 트래킹
+예 : 자동 로그인, 일주일간 다시 보지 않기, 장바구니
+
+# 쿠키의 구성요소 : 이름, 값, 유효기간, 도메인, 경로
+
+# 쿠키의 특징
+: 이름, 값, 만료일, 경로 정보로 구성되어 있다.
+: 클라이언트에 총 300개의 쿠키를 저장할 수 있다.
+: 하나의 도메인 당 20개의 쿠키를 가질 수 있다.
+: 하나의 쿠키는 4KB까지 저장 가능하다.
+
+
+2) 세션
+: 방문자가 웹 서버에 접속해 있는 상태를 하나의 단위로 보고 그것을 세션이라 한다.
+: WAS의 메모리에 Object의 형태로 저장
+: 메모리가 허용하는 용량까지 제한 없이 저장 가능ㅇ
+
+# session의 사용 예 : site 내에서 화면을 이동해도 로그인이 출리지 않고 유지, 장바구니
+
+# 세션의 특징
+: 웹 서버에 웹 컨테이너의 상태를 유지하기 위한 정보를 저장
+: 웹 서버에 저장되는 쿠키
+: 브라우저를 닫거나 서버에서 세션을 삭제 했을 때만 삭제가 되므로, 쿠키보다 비교적 보안이 좋다.
+: 저장 데이터에 제한이 없다.
+: 각 클라이언트 고유 세션 아이디를 부여한다.
+: 세션 아이디로 클라이언트를 구분하여 각 클라이언트 요구에 맞는 서비스 제공
+
+
+### session vs cookie
+타입 : interface / class
+저장 위치 : 서버의 메모리에 Object로 저장 / 클라이언트 컴퓨터에 file로 저장
+저장 형식 : Object는 모두 가능 / String
+용량 제한 : 제한 없음 / 도메인 당 20개, 쿠키 당 4KB
+공통 : 전역에 저장하기 때문에 project 내의 모든 JSP에서 사용가능, key 값의 중복을 허용하지 않음.
+
+
+
+7. 내장객체
+1) request : HTML 폼 요소의 선택 값 등 사용자 입력 정보를 읽어올 때 사용
+2) response : 사용자 요청에 대한 응답을 처리하기 위해서 사용
+3) pageContext : 각종 기본 객체를 얻거나 forward 및 include 기능을 활용할 때 사용
+4) session : 클라이언트에 대한 세션 정보를 처리하기 위해 사용
+5) application : 웹 서버의 애플리케이션 처리와 관련된 정보를 참조하기 위해 사용
+6) out : 사용자에게 전달하기 위한 output 스트림을 처리할 때 사용
+7) config : 현재 JSP에 대한 초기화 환경을 처리하기 위해 사용
+8) page : 현재 JSP 페이지에 대한 참조 변수에 해당됨
+9) exception : 전달된 오류 정보를 담고 있는 내장 객체
+
+# 내장객체의 영역
+: pageContext(하나의 JSP 페이지) < request(하나의 HTTP 요청을 처리) < session(하나의 웹 브라우저) < application(하나의 웹 어플리케이션)
+
+# 내장객체의 공통 메소드
+1) setAttribute : 문자열 name 이름으로 Object 형 데이터를 저장한다.
+2) getAttribute : 문자열 name에 해당하는 속성 값이 있다면 Object 형태로 가져오고 없으면 null을 리턴한다.
+3) getAttributeNames : 현재 객체에 저장된 이름들을 Enumeration 형태로 가져온다.
+4) removeAttribute : 문자열 name에 해당하는 속성을 삭제한다.
+
+
+
+8. request, response
+request : HTML 폼 요소의 선택 값 등 사용자 입력 정보를 읽어올 때 사용
+response : 사용자 요청에 대한 응답을 처리하기 위해서 사용
+
+
+
+9. 페이지 이동 방법 2가지
+- forward(request, response)
+이동범위 : 동일 서버(project) 내 경로
+location bar : 기존 URL 유지
+객체 : 기존의 request와 response가 그대로 전달
+속도 : 비교적 빠름
+데이터 유지 : request의 setAttribute를 통해 전달
+
+- sendRedirect(location)
+이동범위 : 동일 서버(project)포함 타 URL
+location bar : 이동하는 page로 변경
+객체 : 기존의 request와 response는 소멸되고, 새로운 request와 response가 생성됨
+속도 : 비교적 느림
+데이터 유지 : request로는 data 저장 불가능. session이나 cookie를 이용.
+
+
+
+10. 파라미터 전송 방식 차이점과 서블릿에서 운용 방법
+- GET
+특징 : 전송되는 데이터가 URL 뒤에 QueryString으로 전달됨, 입력 값이 적은 경우나 데이터가 노출되도 문제가 없을 경우 사용.
+장점 : 간단한 데이터를 빠르게 전송, form tag뿐만 아니라 URL에 입력하여 전송 가능.
+단점 : 데이터 양에 제한이 있다. (2048byte)
+- POST
+특징 : URL과 별도로 전송, HTTP header 뒤 body에 입력 스트림 데이터로 전달.
+장점 : 데이터의 제한이 없다, 최소한의 보안 유지 효과를 볼 수 있다.
+단점 : 전달 데이터의 양이 같을 경우 GET 방식보다 느리다. (전송 패킷을 body에 데이터로 구성해야 하므로)
+
+
+
+11. EL, JSTL 사용법
+1) EL
+: 표현을 위한 언어로 JSP 스크립트의 표현식을 대신하여 속성 값을 쉽게 출력하도록 고안된 언어이다.
+: 표현식 <%= %>을 대체한 수 있다. => ${ x.x }
+: EL 표현식에서 도트 연산자 왼쪽은 반드시 java.util.Map 객체 또는 Java Bean 객체여야 한다.
+: EL 표현식에서 도트 연산자 오른쪽은 반드시 맵의 key 이거나 Bean 프로퍼티여야 한다.
+: Dot 표기법 외에 [] 연산자를 사용하여 객체의 값에 접근할 수 있다.
+
+# EL에서 제공하는 기능
+: JSP의 네가지 기본 객체가 제공하는 영역의 속성 사용
+: 자바 클래스 메소드 호출 기능
+: 표현 언어만의 기본 객체 제공
+: 수치, 관계, 논리 연산 제공
+
+# EL에서 객체 접근
+: property 이름만 사용할 경우 자동으로 pageScope > requestScope > sessionScope > applicationScope
+: EL은 값이 null이라도 null을 출력하지 않음 (공백 출력)
+
+# empty 연산자에서 true를 return 하는 경우 
+: 값이 null
+: 값이 빈 문자열
+: 길이가 0인 배열
+: 빈 Map 객체
+: 빈 Collection 객체
+
+
+2) JSTL (자바 서버 페이지 표준 태그 라이브러리)
+: Java EE 기반의 웹 애플리케이션 개발 플랫폼을 위한 컴포넌트 모음.
+: XML 데이터 처리과 조건문, 반복문, 국제화와 지역화 같은 일을 처리하기 위한 JSP 태그 라이브러리를 추가하여 JSP 사양을 확장함.
+: JSP 페이지에서 스크립트릿을 사용하지 않고 액션을 통해 간단하게 처리할 수 있는 방법을 제공함.
+
+# JSTL Tag
+: set, catch, if, choose, when, otherwise, forEach, 
+
+
+
+12. MVC 패턴
+1) model1 구조
+: view와 logic을 JSP 페이지 하나에서 처리하는 구조
+- 장점
+: 구조가 단순하며 직관적이기 때문에 배우기 쉽다.
+: 개발 시간이 비교적 짧기 때문에 개발 비용 감소
+
+- 단점
+: 출력을 위한 view 코드와 로직 처리를 위한 java 코드가 섞여 있기 때문에 JSP 코드 자체가 복잡해 진다.
+: Back-End와 Front-End가 혼재되기 때문에 분업이 힘들어진다.
+: 유지보수하기가 어렵다
+: 확장성이 나쁘다
+
+2) model2 구조 : MVC 패턴을 웹 개발에 도입한 구조
+: 클라이언트 요청에 대한 처리는 servlet, 로직 처리는 java class, 클라이언트에게 출력하는 response page를 JSP가 담당한다.
+
+- Service, Dao or Java Beans -> Model
+: Logic(Business & DB Logic)을 처리하는 모든 것.
+: 컨트롤러로부터 넘어온 data를 이용하여 이를 수행하고 그에 대한 결과를 다시 컨트롤러에 리턴한다.
+
+- JSP -> View
+: 모든 화면 처리를 담당. 클라이언트의 요청에 대한 결과 뿐 아니라 컨트롤러에 요청을 보내는 화면단도 jsp에서 처리한다.
+: Logic 처리를 위한 java code는 사라지고 결과 출력을 위한 code만 존재.
+
+- Servlet -> Controller
+: 클라이언트의 요청을 분석하여 Logic처리를 위한 Model단을 호출한다.
+: return 받은 결과 data를 필요에 따라 request, session등에 저장하고,
+redirect 또는 forward 방식으로 jsp page를 이용하여 출력한다.
+
+
+
+13. 에러페이지 작성할 때 응답 코드, 에러 처리 방법
+100: 작업 진행 중
+200: 성공
+300: 리다이렉션
+400: 클라이언트 오류 (404: Not found)
+500: 서버 오류
+
+JSP 지시자 page -> errorPage="error.jsp" isErrorPage="true"
+
+자바 서블릿
+: 자바를 이용하여 웹페이지를 동적으로 생성하는 서버측 프로그램 혹은 그 사양을 말한다.
+: 자바 서블릿은 '웹 서버의 성능을 향상'하기 위해 사용되는 자바 클래스의 일종이다.
+: 서블릿은 JSP와 비슷한 점이 있지만, JSP가 HTML 문서 안에 JAVA 코드를 포함하고 있는 반면,
+서블릿은 자바 코드 안에 HTML을 포함하고 있다.
+
+Servlet API
+: MyServlet -> HttpServlet -> GenericServlet -> Servlet
+
+JSP (자바 서버 페이지)
+: 자바 서버 페이지는 HTML 내에 자바 코드를 삽입하여 웹 서버에서 동적으로 웹 페이지를 생성하여 웹 브라우저에 돌려주는 언어이다.
+Java EE 스펙 중 일부로 웹 애플리케이션 서버에서 동작한다.
+: 자바 서버 페이지는 실행시에는 자바 서블릿으로 변환된 후 실행되므로 서블릿과 거의 유사하다고 볼 수 있다.
+하지만 서블릿과 달리 HTML 표준에 따라 작성되므로 웹 디자인하기에 편리하다. 이와 비슷한 구조로 PHP, ASP, ASP.NET 등이 있다.
+: 아파치 스트럿츠나 JSTL 등의 JSP 태그 라이브러리를 사용하는 경우에는 자바 코딩없이 태그만으로 간략히 기술이 가능하므로 생산성을 높일 수 있다.
+
+JSP 동작 흐름
+: 최초 jsp 요청 시, jsp file 변경 시 jsp가 servlet으로 변경 됨.
+Servlet java file로 변환 -> Servlet class compile -> Servlet class를 메모리에 적재
+
+
+Web Application Architecture
+: model1 과 model2로 나뉨
+: JSP가 클라이언트의 요청에 대한 로직 처리와 response page(view)에 대한 처리를 모두 하느냐,
+아니면 response page(view)에 대한 처리만 하는지가 가장 큰 차이점
+
+
+
+
+
+
