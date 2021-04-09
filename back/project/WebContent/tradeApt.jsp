@@ -20,6 +20,18 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!--   <script type="text/javascript" >
     </script>-->
+    
+<script type="text/javascript">
+	$(function() {
+		$("#addInterest").click(function() {
+			location.href = "${root}/main?act=addInterest&gugun=${gugun}&dong=${dong}";
+		});
+		
+		$("#removeInterest").click(function() {
+			location.href = "${root}/main?act=removeInterest&gugun=${gugun}&dong=${dong}";
+		});
+	})
+</script>
 </head>
 <body>
 	<%@ include file="/include/header.jsp"%>
@@ -32,6 +44,27 @@
 		
 		<div class="col-12 text-center">
 		<h3 class = "text-center">[${dong} 아파트 거래 정보]</h3>
+		
+		<c:if test="${userinfo ne null}">
+			<c:set var="check" value="true"/>
+			<c:set var="area" value="${gugun}${dong}"/>
+			
+			<c:forEach var = "list" items = "${userinfo.interest}">
+				<c:if test="${check}">
+					<c:if test ="${list eq area}">
+						<button type="button" class="btn btn-danger" id="removeInterest">관심지역 삭제</button>
+						<c:set var="check" value="false"/>
+					</c:if>
+				</c:if>
+			</c:forEach>
+			
+			<c:if test ="${check eq true}">
+				<button type="button" class="btn btn-success" id="addInterest">관심지역 추가</button>
+			</c:if>
+		</c:if>
+		
+		<div style="height:30px;"></div>
+		
 			<div id="map" style="max-width: 1200px; height: 500px;"></div>
 			<script type="text/javascript"
 				src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb94e0a165fada25939d9bf736b9992f"></script>

@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.List;
+
 import com.ssafy.happyhouse.model.MemberDto;
 
 public interface MemberService {
@@ -19,4 +21,9 @@ public interface MemberService {
 //	회원탈퇴
 	void deleteMember(String userId);
 	
+	public void addInterest(String userid, String gugun, String dong);
+	
+	public void removeInterest(String userid, String gugun, String dong);
+	
+	public List<String> findInterest(String userid);
 }

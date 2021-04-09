@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.List;
+
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.dao.MemberDaoImpl;
 
@@ -42,4 +44,15 @@ public class MemberServiceImpl implements MemberService {
 		MemberDaoImpl.getMemberDao().deleteMember(userId);
 	}
 
+	public void addInterest(String userid, String gugun, String dong) {
+		MemberDaoImpl.getMemberDao().addInterest(userid, gugun, dong);
+	}
+	
+	public void removeInterest(String userid, String gugun, String dong) {
+		MemberDaoImpl.getMemberDao().removeInterest(userid, gugun, dong);
+	}
+	
+	public List<String> findInterest(String userid) {
+		return MemberDaoImpl.getMemberDao().findInterest(userid);
+	}
 }

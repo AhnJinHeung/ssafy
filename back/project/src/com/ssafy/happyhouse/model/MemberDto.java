@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.model;
 
+import java.util.List;
+
 public class MemberDto {
 
 	private String userId;
@@ -8,6 +10,7 @@ public class MemberDto {
 	private String email;
 	private String address;
 	private String joindate;
+	private List<String> interest;
 
 	public MemberDto() {};
 	
@@ -19,6 +22,7 @@ public class MemberDto {
 		this.email = email;
 		this.address = address;
 		this.joindate = joindate;
+		this.interest = null;
 	}
 
 	public String getUserId() {
@@ -67,5 +71,13 @@ public class MemberDto {
 
 	public void setJoindate(String joindate) {
 		this.joindate = joindate;
+	}
+
+	public List<String> getInterest() {
+		return interest;
+	}
+
+	public void setInterest(List<String> interest) {
+		this.interest = interest;
 	}
 }
