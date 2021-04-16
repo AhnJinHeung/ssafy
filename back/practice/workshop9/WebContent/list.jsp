@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%-- jstl의 core 라이브러리를 사용하기 위해 taglib를 이용한다. --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#book-list {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#book-list td, #book-list th {
+	border: 1px solid black;
+}
+</style>
+</head>
+<body>
+	<%@ include file="/include/header.jsp"%>
+	<h1>도서 목록</h1>
+	<table id="book-list">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>ISBN</th>
+				<th>저자</th>
+				<th>가격</th>
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach var="list" items="${bookList}" varStatus="vs">
+			<tr><td>${vs.count}</td><td>${list.isbn}</td><td>${list.author}</td><td>${list.price}</td></tr>
+		</c:forEach>
+		</tbody>
+	</table>
+</body>
+</html>
