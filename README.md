@@ -7,9 +7,16 @@
 * Algorithm
 
 
-* Web/Framework
+* Frontend
+
+
+* Backend
+
+
+* Framework
 
 
 * Database
+
 
 * Project
