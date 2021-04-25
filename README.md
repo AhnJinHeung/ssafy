@@ -1,4 +1,4 @@
-# ssafy
+# SSAFY
 
 
 * Java
