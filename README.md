@@ -4,7 +4,7 @@
 * Java
 
 
-* Algorithm
+* algorithm
 
 
 * Frontend
