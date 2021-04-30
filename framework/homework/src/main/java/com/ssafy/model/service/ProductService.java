@@ -6,8 +6,6 @@ import com.ssafy.model.dto.Product;
 import com.ssafy.model.repository.ProductRepo;
 
 public interface ProductService {
-	public ProductRepo getRepo() throws Exception;
-	
 	public List<Product> selectAll() throws Exception;
 	
 	public Product select(String id) throws Exception;

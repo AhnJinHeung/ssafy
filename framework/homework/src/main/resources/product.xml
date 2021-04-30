@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.model.repository.ProductRepo">
+
+	<select id="selectAll" resultType="product">
+		select code id, pname name, company, price, discription description
+		from product_info
+	</select>
+	
+	<select id="select" parameterType="String" resultType="product">
+		select code id, pname name, company, price, discription description
+		from product_info
+		where code = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="product">
+		insert into product_info
+		values(#{id}, #{name}, #{company}, #{price}, #{description})
+	</insert>
+	
+	<update id="update" parameterType="product">
+		update product_info
+		set company = #{company}, pname = #{name}, price = #{price}, discription = #{description}
+		where code = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from product_info
+		where code = #{id}
+	</delete>
+	
+</mapper>
