@@ -3,19 +3,13 @@
 
 * Java
 
-
 * Algorithm
-
 
 * Frontend
 
-
 * Backend
 
-
-* Framework   
-** Spring   
-** vue
+* Framework
 
 * Database
 
