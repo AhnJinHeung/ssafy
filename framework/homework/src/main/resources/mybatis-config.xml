@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.ssafy.model.dto.Product" alias="product" />
+		<typeAlias type="com.ssafy.model.dto.SearchCondition" alias="condition" />
 	</typeAliases>
 </configuration>
 

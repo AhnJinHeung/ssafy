@@ -20,7 +20,7 @@
 <body>
 	<h1>상품 검색</h1>
 	<div>
-		<label for="code">상품 번호 검색</label>
+		<label for="code">상품 코드 검색</label>
 		<form action="${root}/product/select" method="post">
 			<input type="text" id="code" name="code">
 			<input type="submit" value="검색">
@@ -40,15 +40,21 @@
 				<th>제조회사</th>
 				<th>가격</th>
 				<th>설명</th>
+				<th>파일</th>
+				<th>파일명</th>
+				<th>byte</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td>${product.id}</td>
+				<td>${product.code}</td>
 				<td>${product.name}</td>
 				<td>${product.company}</td>
 				<td>${product.price}</td>
 				<td>${product.description}</td>
+				<td>${product.file}</td>
+				<td>${product.fileName}</td>
+				<td>${product.fileSize}</td>
 			</tr>
 		</tbody>
 	</table>

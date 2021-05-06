@@ -10,7 +10,7 @@
 </head>
 <body>
 	<ul>
-		<li><a href="${root}/product/selectAll">도서 목록</a>
+		<li><a href="${root}/product/search">도서 목록</a>
 		<li><a href="${root}/product/select">도서 검색</a> 
 		<li><a href="${root}/product/insert">도서 등록</a>
 	</ul>

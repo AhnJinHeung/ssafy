@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>상품 정보 수정</title>
 <style>
+	#info {
+		width:600px;
+	}
 	label{
 		display: inline-block;
 		width: 80px;
@@ -18,11 +21,11 @@
 </head>
 <body>
 	<h1>상품 정보 수정</h1>
-	<form method="post" action="${root}/product/update">
-		<fieldset>
+	<form method="post" action="${root}/product/update" enctype="multipart/form-data">
+		<fieldset id="info">
 		<legend>상품 정보</legend>
-		<label for="id">상품번호</label>
-		<input type="text" id="id" name="id" value="${product.id}" readonly="readonly"><br>
+		<label for="code">상품번호</label>
+		<input type="text" id="code" name="code" value="${product.code}" readonly="readonly"><br>
 		<label for="name">상품명</label>
 		<input type="text" id="name" name="name" value="${product.name}"><br>
 		<label for="company">제조회사</label>
@@ -32,8 +35,11 @@
 		<label for="desc">설명</label>
 		<br>
 		<textarea id="description" name="description">${product.description}</textarea><br>
+		<label for="attach">첨부파일</label><input type="file" id="attach" name="attach"><p>
+		<div>
 		<input type="submit" value="등록">
 		<input type="reset" value="취소">
+		</div>
 		</fieldset>
 	</form>
 	<br>

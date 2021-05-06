@@ -1,6 +1,7 @@
 package com.ssafy.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.model.dto.Product;
+import com.ssafy.model.dto.SearchCondition;
 import com.ssafy.model.service.ProductService;
+import com.ssafy.util.PageNavigation;
 
 @Controller
 @RequestMapping("/product")
@@ -38,15 +42,15 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/select", method=RequestMethod.GET)
-	public String search() {
+	public String select() {
 		return "product/search";
 	}
 	
 	@RequestMapping(value="/select", method=RequestMethod.POST)
-	public String select(@RequestParam("code") String id, Model model) {
+	public String select(String name, Model model) {
 		Product product = null;
 		try {
-			product = productService.select(id);
+			product = productService.select(name);
 			model.addAttribute("product", product);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,15 +60,37 @@ public class ProductController {
 		return "product/search";
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/search")
+	public String search(SearchCondition condition, Model model) {
+		List<Product> list = null;
+		PageNavigation navigation = null;
+		try {
+			Map<String, Object> map = productService.pagingSearch(condition);
+			list = (List<Product>) map.get("products");
+			navigation = (PageNavigation) map.get("navigation");
+			
+			model.addAttribute("key", condition.getKey());
+			model.addAttribute("word", condition.getWord());
+			model.addAttribute("productList", list);
+			model.addAttribute("navigation", navigation);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "상품 조회 중 오류 발생");
+			return "error/error";
+		}
+		return "product/list_ajax";
+	}
+	
 	@RequestMapping(value="/insert", method=RequestMethod.GET)
 	public String insert() {
 		return "product/regist";
 	}
 	
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
-	public String insert(Product product, Model model) {
+	public String insert(Product product, MultipartFile attach, Model model) {
 		try {
-			productService.insert(product);
+			productService.insert(product, attach);
 			model.addAttribute("msg", "상품이 등록 되었습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,10 +101,10 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(String id, Model model) {
+	public String update(String code, Model model) {
 		Product product = null;
 		try {
-			product = productService.select(id);
+			product = productService.select(code);
 			model.addAttribute("product", product);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,9 +115,9 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(Product product, Model model) {
+	public String update(Product product, MultipartFile attach, Model model) {
 		try {
-			productService.update(product);
+			productService.update(product, attach);
 			model.addAttribute("product", product);
 			model.addAttribute("msg", "업데이트 되었습니다.");
 		} catch (Exception e) {
@@ -103,16 +129,16 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
-	public String delete(String id, Model model) {
+	public String delete(String name, Model model) {
 		try {
-			productService.delete(id);
+			productService.delete(name);
 			model.addAttribute("msg", "삭제 되었습니다.");
-			selectAll(model);
+			search(new SearchCondition(), model);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "상품 삭제 중 오류 발생");
 			return "error/error";
 		}
-		return "index";
+		return "product/list";
 	}
 }

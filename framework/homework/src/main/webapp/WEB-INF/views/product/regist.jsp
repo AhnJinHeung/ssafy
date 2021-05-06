@@ -18,11 +18,11 @@
 </head>
 <body>
 	<h1>상품 등록</h1>
-	<form method="post" action="${root}/product/insert">
+	<form method="post" action="${root}/product/insert" enctype="multipart/form-data">
 		<fieldset>
 		<legend>상품 정보</legend>
-		<label for="id">상품번호</label>
-		<input type="text" id="id" name="id"><br>
+		<label for="code">상품번호</label>
+		<input type="text" id="code" name="code"><br>
 		<label for="name">상품명</label>
 		<input type="text" id="name" name="name"><br>
 		<label for="company">제조회사</label>
@@ -32,6 +32,7 @@
 		<label for="desc">설명</label>
 		<br>
 		<textarea id="description" name="description"></textarea><br>
+		<label for="attach">첨부파일</label><input type="file" id="attach" name="attach">
 		<input type="submit" value="등록">
 		<input type="reset" value="취소">
 		</fieldset>

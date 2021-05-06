@@ -1,29 +1,36 @@
 package com.ssafy.model.dto;
 
+
 public class Product {
-	private String id;
+	private String code;
 	private String name;
 	private String company;
 	private int price;
 	private String description;
+	private byte[] file;
+	private String fileName;
+	private long fileSize;
 	
 	public Product() {}
 
-	public Product(String id, String name, String company, int price, String description) {
+	public Product(String code, String name, String company, int price, String description, byte[] file, String fileName, long fileSize) {
 		super();
-		this.id = id;
+		this.code = code;
 		this.name = name;
 		this.company = company;
 		this.price = price;
 		this.description = description;
+		this.file = file;
+		this.fileName = fileName;
+		this.fileSize = fileSize;
 	}
 
-	public String getId() {
-		return id;
+	public String getCode() {
+		return code;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {
@@ -57,10 +64,28 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public byte[] getFile() {
+		return file;
+	}
 
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", company=" + company + ", price=" + price + ", description="
-				+ description + "]";
+	public void setFile(byte[] file) {
+		this.file = file;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
 	}
 }
