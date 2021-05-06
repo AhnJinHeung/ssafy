@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.homework.model.repository.ProductRepo">
+
+	<select id="selectAll" resultType="product">
+		select code, name, company, price, description, file, fileName, fileSize
+		from product_info
+	</select>
+	
+	<select id="select" parameterType="String" resultType="product">
+		select code, name, company, price, description, file, fileName, fileSize
+		from product_info
+		where code = #{code}
+	</select>
+	
+	<insert id="insert" parameterType="product">
+		insert into product_info
+		values(#{code}, #{name}, #{company}, #{price}, #{description}, #{file}, #{fileName}, #{fileSize})
+	</insert>
+	
+	<update id="update" parameterType="product">
+		update product_info
+		set company = #{company}, name = #{name}, price = #{price}, description = #{description}, file = #{file}, fileName = #{fileName}, fileSize = #{fileSize}
+		where code = #{code}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from product_info
+		where code = #{code}
+	</delete>
+	
+	<!-- 페이징 -->
+	<select id="search" parameterType="SearchCondition" resultType="product">
+		select code, name, company, price, description description, file, fileName, fileSize
+		from product_info
+		<if test="word != null and word != ''">
+			<if test="key == 'name'">
+				where name like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'name'">
+				where ${key} = #{word}
+			</if>
+		</if>
+		order by code desc
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id="getTotalCount" parameterType="SearchCondition" resultType="int">
+		select count(code)
+		from product_info
+		<if test="word != null and word != ''">
+			<if test="key == 'name'">
+				where subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'name'">
+				where ${key} = #{word}
+			</if>
+		</if>
+	</select>
+</mapper>
