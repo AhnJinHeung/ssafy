@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.AddressMapper">
+	
+	<select id="searchSido" resultType="AddressDto">
+		select sido_name sido
+		from sidocode
+	</select>
+	
+	<select id="searchGugun" parameterType="String" resultType="AddressDto">
+		select distinct gugun
+		from baseaddress
+		where city = #{sido}
+	</select>
+	
+	<select id="searchDong" parameterType="String" resultType="AddressDto">
+		select distinct dong
+		from baseaddress
+		where gugun = #{gugun}
+	</select>
+	
+	<select id="searchPosition" parameterType="map" resultType="AddressDto">
+		select lat, lng
+		from baseaddress
+		where gugun = #{gugun} and dong = #{dong}
+	</select>
+	
+</mapper>

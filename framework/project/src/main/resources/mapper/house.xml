@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HouseMapper">
+
+	<select id="findApt" parameterType="String" resultType="HouseDto">
+		select aptName, dealAmount, area, buildYear
+		from housedeal
+		where dong = #{dong}
+	</select>
+	
+	<select id="pagingSearch" parameterType="SearchCondition" resultType="HouseDto">
+		select aptName, dealAmount, area, buildYear
+		from housedeal
+		where dong = #{dong}
+		order by AptName
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id="setMarker" parameterType="String" resultType="HouseDto">
+		select aptName, lat, lng
+		from houseinfo
+		where dong like #{dong}
+	</select>
+	
+</mapper>
