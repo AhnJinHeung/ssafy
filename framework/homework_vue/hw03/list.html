@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <!-- https://momentjs.com/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app" class="container">
+      <p>
+        <a href="./index.html">HOME</a>
+        <a href="./list.html">게시판</a>
+      </p>
+
+      <h2 class="text-center">사원목록</h2>
+      <search-user></search-user>
+      <emp-list></emp-list>
+      <page-move></page-move>
+    </div>
+    <script>
+      const bus = new Vue();
+      const EmpList = {
+        template: `
+        <div>
+        <table class="table table-bordered table-condensed">
+          <colgroup>
+            <col :style="{width: '20%'}" />
+            <col :style="{width: '20%'}" />
+            <col :style="{width: '20%'}" />
+            <col :style="{width: '20%'}" />
+            <col :style="{width: '20%'}" />
+          </colgroup>
+          <tr>
+            <th>사원 아이디</th>
+            <th>사원명</th>
+            <th>부서</th>
+            <th>직책</th>
+            <th>연봉</th>
+          </tr>
+          <tr v-for="(board, index) in result" :key="index + '_result'">
+            <td>{{board.no}}</td>
+            <td>{{board.userName}}</td>
+            <td>{{board.dept}}</td>
+            <td>{{board.position}}</td>
+            <td>{{board.salary}}</td>
+          </tr>
+        </table>
+        </div>
+      `,
+        data() {
+          return {
+            items: [],
+            result: [],
+          };
+        },
+        created() {
+          const board = localStorage.getItem("board");
+          let newBoard = {
+            sequence: 0,
+            items: [],
+          };
+          if (board) {
+            newBoard = JSON.parse(board);
+          } else {
+            localStorage.setItem("board", JSON.stringify(newBoard));
+          }
+          this.items = newBoard.items;
+
+          bus.$on("search", (search) => {
+            this.result = [];
+
+            this.items.forEach((item) => {
+              if (item.userName.includes(search)) {
+                this.result.push(item);
+              }
+            });
+          });
+        },
+      };
+
+      const SearchUser = {
+        template: `
+        <div>
+        <span><input type="text" v-model="word" placeholder="사원 이름"/></span>
+        <span><button @click="search">검색</button></span>
+        </div>
+        `,
+        data() {
+          return {
+            word: "",
+          };
+        },
+        methods: {
+          search() {
+            bus.$emit("search", this.word); // 이벤트 호출하기
+          },
+        },
+      };
+
+      const PageMove = {
+        template: `
+        <div class="text-right">
+        <button class="btn btn-primary" @click="movePage">등록</button>
+        </div>
+        `,
+        methods: {
+          movePage() {
+            location.href = "create.html";
+          },
+        },
+      };
+
+      new Vue({
+        el: "#app",
+        name: "select",
+        components: { EmpList, SearchUser, PageMove },
+      });
+    </script>
+  </body>
+</html>
