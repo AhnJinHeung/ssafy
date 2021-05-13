@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app" class="container">
+      <p>
+        <a href="./index.html">HOME</a>
+        <a href="./list.html">게시판</a>
+      </p>
+
+      <h2 class="text-center">Vue를 이용한 게시판</h2>
+      <div>삭제중...</div>
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        created() {
+          const params = new URL(document.location).searchParams;
+          const board = JSON.parse(localStorage.getItem('board'));
+
+          // javascript filter 함수를 이용하여 params.get('no')와 같은 번호를 가지는 데이터를
+          // board에서 찾아서 반환하는 기능 구현
+          // board.items = [ ? ? ]
+          let newBoard = {
+            sequence: 0,
+            items: [],
+          };
+
+          newBoard.sequence = board.sequence - 1;
+          for (let obj of board.items) {
+            if (params.get('no') != obj.no) {
+              newBoard.items.push(obj);
+            }
+          }
+
+          // 로컬스토리지에 "board"키로 board 객체의 내용을 문자열로 변환 후 저장하는 코드 작성
+          // 객체 내용을 문자열로 변환시 JSON.stringify 사용
+          localStorage.setItem('board', JSON.stringify(newBoard));
+
+          alert('삭제가 완료되었습니다.');
+
+          // 현재 페이지를 "./list.html" 로 이동시킨다.
+          location.href = 'list.html';
+        },
+      });
+    </script>
+  </body>
+</html>
