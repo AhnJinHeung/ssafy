@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app" class="container">
+      <p>
+        <a href="./index.html">HOME</a>
+        <a href="./list.html">게시판</a>
+      </p>
+
+      <h2 class="text-center">Vue를 이용한 게시판</h2>
+      <div>
+        <div class="form-group">
+          <label for="writer">작성자</label>
+          <!-- data 속성과 연결 -->
+          <input
+            type="text"
+            class="form-control"
+            id="writer"
+            ref="writer"
+            placeholder="작성자를 입력하세요"
+            v-model="writer"
+          />
+        </div>
+        <div class="form-group">
+          <label for="title">제목</label>
+
+          <!-- data 속성과 연결 -->
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            ref="title"
+            placeholder="제목을 입력하세요"
+            v-model="title"
+          />
+        </div>
+        <div class="form-group">
+          <label for="content">내용</label>
+
+          <!-- data 속성과 연결 -->
+          <textarea
+            type="text"
+            class="form-control"
+            id="content"
+            ref="content"
+            placeholder="내용을 입력하세요"
+            v-model="content"
+          ></textarea>
+        </div>
+        <div class="text-right">
+          <!-- 버튼 클릭 시 checkHandler 메서드 호출 -->
+          <button class="btn btn-primary" @click="checkHandler">등록</button>
+
+          <!-- 버튼 클릭 시 moveList 메서드 호출 -->
+          <button class="btn btn-primary" @click="moveList">목록</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        // 폼 화면 입력값과 연관된 데이터 선언하기
+        data() {
+          return {
+            no: '',
+            regtime: '',
+            writer: '',
+            title: '',
+            content: '',
+          };
+        },
+        methods: {
+          // 입력값 체크하는 checkHandler 함수 정의 - 체크가 성공하면 createHandler 호출
+          checkHandler: function () {
+            // 사용자 입력값 체크하기
+            // var writer = document.querySelector('#writer');
+            // var title = document.querySelector('#title');
+            // var content = document.querySelector('#content');
+
+            let writer = this.writer;
+            let title = this.title;
+            let content = this.content;
+            // 작성자, 제목, 내용
+            // [ ? ? ]
+
+            // 입력된 데이터가 없을 경우 각 항목에 맞는 메세지를 출력
+            // 글쓴이가 입력 안된 경우 : 글쓴이를 입력하세요
+            // 제목이 입력 안된 경우 : 제목을 입력하세요
+            // 내용이 입력 안된 경우 : 내용을 입력하세요
+            let err = true;
+            if (writer == '') {
+              console.log('글쓴이를 입력하세요.');
+              err = false;
+              return;
+            }
+            if (title == null) {
+              console.log('제목을 입력하세요.');
+              err = false;
+              return;
+            }
+            if (content == null) {
+              console.log('내용을 입력하세요.');
+              err = false;
+              return;
+            }
+
+            // 만약, 내용이 다 입력되어 있다면 createHandler 호출
+            if (err) this.createHandler();
+          },
+
+          // createHandler 메서드 정의
+          createHandler: function () {
+            // 로컬스토리지에 저장된 데이터 가져오기(키 이름 : board)
+            const board = localStorage.getItem('board');
+
+            // 데이터 선언
+            let newBoard = {
+              sequence: 0,
+              items: [],
+            };
+
+            // 기존 로컬스토리지에 저장된 내용이 있다면
+            // newBoard 객체를 board 변수의 내용을 json 객체로 변환 후 newBoard에 대입
+            if (board) {
+              newBoard = JSON.parse(board);
+            }
+
+            // newBoard 글번호 증가
+            newBoard.sequence += 1;
+
+            // 화면 입력된 데이터를 newBoard에 추가
+            newBoard.items.push({
+              writer: this.writer,
+              title: this.title,
+              content: this.content,
+              no: newBoard.sequence,
+              regtime: new Date(),
+            });
+
+            // 로컬스트리지 저장(setItem 함수 사용) : 키이름(board), 값(newBoard 객체의 내용을 문자열로 변환 후 저장)
+            // 객체의 내용을 문자열로 변환시 JSON.stringify 함수 사용
+            localStorage.setItem('board', JSON.stringify(newBoard));
+
+            // 등록 성공 메세지 출력
+            alert('등록이 완료되었습니다.');
+
+            // 목록 페이지로 이동하기
+            location.href = 'list.html';
+          },
+          // 목록 페이지로 이동하는 moveList 메서드 정의
+          moveList() {
+            location.href = 'list.html';
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
